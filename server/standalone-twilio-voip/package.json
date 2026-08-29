@@ -1,0 +1,14 @@
+{
+  "name": "talkfree-twilio-voip-webhook",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal Express + Twilio POST /call TwiML server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "twilio": "^5.3.0"
+  }
+}

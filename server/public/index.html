@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TalkFree — Call</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 28rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-weight: 600;
+      }
+      input {
+        width: 100%;
+        padding: 0.5rem 0.65rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 0.75rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      #out {
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TalkFree</h1>
+    <label for="phone">Phone number (E.164)</label>
+    <input id="phone" type="tel" placeholder="+91XXXXXXXXXX" autocomplete="tel" />
+    <button type="button" id="btn">Call</button>
+    <p id="out"></p>
+    <script>
+      const phone = document.getElementById("phone");
+      const btn = document.getElementById("btn");
+      const out = document.getElementById("out");
+
+      btn.addEventListener("click", async () => {
+        const number = phone.value.trim();
+        out.textContent = "";
+        if (!number) {
+          out.textContent = "Enter a phone number.";
+          return;
+        }
+        out.textContent = "Calling…";
+        try {
+          const res = await fetch(
+            "/call?to=" + encodeURIComponent(number),
+          );
+          out.textContent = await res.text();
+        } catch (e) {
+          out.textContent =
+            "Error: " + (e && e.message ? e.message : String(e));
+        }
+      });
+    </script>
+  </body>
+</html>
